@@ -63,7 +63,7 @@ app.post("/send-email", async (req, res) => {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json"
       },
-      timeout: 10000
+      timeout: 20000
     });
 
     return res.json({ message: "Email sent successfully!" });
@@ -80,5 +80,5 @@ if (require.main === module) {
     console.log(`Server listening on port ${port}`);
   });
 } else {
-  module.exports = serverless(app);
+  module.exports = serverless(app, { binary: false });
 } 
