@@ -1,0 +1,15 @@
+{
+  "name": "outlook-sender",
+  "version": "1.0.0",
+  "description": "Node API for sending emails via Microsoft Graph",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@azure/identity": "^3.0.0",
+    "axios": "^1.0.0",
+    "express": "^4.18.2",
+    "dotenv": "^10.0.0"
+  }
+} 
