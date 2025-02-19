@@ -4,6 +4,7 @@ require('dotenv').config();
 const express = require("express");
 const axios = require("axios");
 const { ClientSecretCredential } = require("@azure/identity");
+const serverless = require("serverless-http");
 
 const app = express();
 app.use(express.json());
@@ -71,8 +72,12 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
-// Start server locally
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-}); 
+// Server start for local development or export for serverless (Vercel) deployment
+if (require.main === module) {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
+} else {
+  module.exports = serverless(app);
+} 
