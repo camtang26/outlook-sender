@@ -7,7 +7,19 @@ const { ClientSecretCredential } = require("@azure/identity");
 const serverless = require("serverless-http");
 
 const app = express();
-app.use(express.json());
+
+// Remove the previous custom middleware that used getRawBody and replace with:
+app.use(express.raw({ type: 'application/json', limit: '1mb' }));
+app.use((req, res, next) => {
+  if (req.body && Buffer.isBuffer(req.body)) {
+    try {
+      req.body = JSON.parse(req.body.toString('utf8'));
+    } catch (err) {
+      return next(err);
+    }
+  }
+  next();
+});
 
 // 1. Environment variables (in Vercel or local .env):
 //    AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, SENDER_UPN
