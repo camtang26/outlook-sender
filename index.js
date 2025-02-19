@@ -62,7 +62,8 @@ app.post("/send-email", async (req, res) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json"
-      }
+      },
+      timeout: 10000
     });
 
     return res.json({ message: "Email sent successfully!" });
